@@ -1,0 +1,20 @@
+安装python
+yum -y install python
+
+安装python-pip
+yum -y install python-pip
+
+pip 升级安装 shadowsocks 
+pip install shadowsocks
+
+
+配置shadowsocks
+vi /etc/ss.json
+
+
+启用ssserver 
+ssserver -c /etc/shadowsocks.json -d start
+
+关闭防火墙 或者开启 相应端口
+关闭防火墙       systemctl stop firewalld.service
+开启防火墙端口  firewall-cmd --zone=public --add-port=相应端口/tcp --permanent  
