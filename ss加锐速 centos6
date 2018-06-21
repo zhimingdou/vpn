@@ -3,19 +3,19 @@ service iptables status  状态
 CentOS6.9中是输入iptables
 service iptables start  开启
 
-一键更换内核脚本（Vultr需先执行此脚本）
+//一键更换内核脚本（Vultr需先执行此脚本）
 
 wget -N --no-check-certificate https://freed.ga/kernel/ruisu.sh && bash ruisu.sh
 
 wget -N --no-check-certificate https://github.com/91yun/serverspeeder/raw/master/serverspeeder.sh && bash serverspeeder.sh
 安装后重启 安装会花点时间
 
-备用
+//备用
 wget -N --no-check-certificate https://raw.githubusercontent.com/91yun/serverspeeder/master/serverspeeder-all.sh && bash serverspeeder-all.sh
 
-service serverSpeeder start 启动锐速
+service serverSpeeder start //启动锐速
 
-安装ss
+//安装ss
 
 wget --no-check-certificate -O shadowsocks.sh https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocks.sh
 
@@ -31,19 +31,25 @@ vi /etc/shadowsocks.json
   "password": "12345678",
   "method": "aes-256-cfb"
 }
-
+//单端口
 {
-    "server": "0.0.0.0",
-    "port_password": {
-        "8381": "password1",
-        "8382": "password2",
-        "8383": "password3",
-        "8384": "password4"
+    "server":"0.0.0.0",
+    "local_address":"127.0.0.1",
+    "local_port":1080,
+    "port_password":{
+         "2020":"12345678d",
+         "9001":"password1",
+         "9002":"password2",
+         "9003":"password3",
+         "9004":"password4"
     },
-    "timeout": 300,
-    "method": "aes-256-cfb"
+    "timeout":300,
+    "method":"aes-256-cfb",
+    "fast_open": false
 }
+//多端口
 
 systemctl stop firewalld.service
 
-ssserver -c /etc/shadowsocks.json -d start 开始ss
+ssserver -c /etc/shadowsocks.json -d start //开始ss
+iptables -I INPUT -p tcp --dport 9001 -m state --state NEW -j ACCEPT //开启相应的端口
