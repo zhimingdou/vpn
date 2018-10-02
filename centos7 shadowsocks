@@ -9,7 +9,7 @@ pip install shadowsocks
 
 
 配置shadowsocks
-vi /etc/ss.json
+vi /etc/shadowsocks.json
 
 
 启用ssserver 
